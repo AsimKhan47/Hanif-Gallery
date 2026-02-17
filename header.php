@@ -11,29 +11,48 @@
 <header class="site-header">
     <div class="nav-container">
 
+        <!-- LOGO -->
         <div class="logo">
-            <a href="<?php echo esc_url(home_url('/')); ?>">
-                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/logo.jpg" alt="Site Logo">
+            <a href="/">
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/logo.jpeg" alt="Site Logo">
             </a>
         </div>
 
-        <nav class="nav-links" id="navLinks">
-            <a href="#hero">Home</a>
-            <a href="#products">About</a>
-            <a href="#products">Gallery</a>
-            <a href="#products">Personal Award</a>
-            <a href="#products">Painting Award</a>
-            <a href="#products">Abstract Painting</a>
-            <a href="#products">Portrait Painting</a>
-            <a href="#products">Glass Painting</a>
-            <a href="#products">Natural Painting</a>
-            <a href="#products">Contact</a>
-        </nav>
+        <!-- MANUAL MENU -->
+      <nav class="nav-links" id="navLinks">
+    <?php
+    wp_nav_menu([
+        'theme_location' => 'primary_menu',
+        'container' => false,        // Remove default <div>
+        'menu_class' => '',           // Optional: class for <ul>
+        'fallback_cb' => false        // If menu not set, show nothing
+    ]);
+    ?>
+</nav>
 
-        <div class="menu-toggle" onclick="toggleMenu()">
+        <!-- MOBILE TOGGLE -->
+        <button class="menu-toggle" aria-label="Toggle Menu" onclick="toggleMenu()">
             ☰
-        </div>
+        </button>
 
     </div>
 </header>
 
+<script>
+function toggleMenu() {
+    const nav = document.getElementById('navLinks');
+    nav.classList.toggle('active');
+}
+	document.querySelectorAll('.menu-item-has-children > a').forEach(item => {
+    item.addEventListener('click', function(e) {
+        if (window.innerWidth <= 768) {
+            e.preventDefault();
+            this.parentElement.classList.toggle('open');
+        }
+    });
+});
+</script>
+
+<?php wp_footer(); ?>
+</body>
+</html>
